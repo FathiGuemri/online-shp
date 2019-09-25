@@ -1,0 +1,16 @@
+extends ./layout/layout
+block contant
+  .container.mt-5
+    .row
+        if product
+          .col.col-12.col-md-6
+              img.mb-3(src='/' + product.image)
+              form(action="/cart" method="POST")
+                  input.form-control.form-control-sm(type="number",  name="amount")
+                  input.btn.btn-cyan.btn-sm(tupe="submit" , value="add to cart")
+          .col.col-12.col-md-6
+              h3= product.name
+              h5= product.price + '$'
+              p.lead= product.description
+        else 
+          .alert.alert-danger there is  no product matches by id

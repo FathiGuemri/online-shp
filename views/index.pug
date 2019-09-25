@@ -1,15 +1,26 @@
 extends ./layout/layout
 block contant
-   .container.mt-5
-        .row
+  .container.mt-5
+    form.form-online.mb-3(action="/" , method="GET")
+        select.form-control.form-control-sm.w-50(name='category')
+            option(value='all') All
+            option(value='phones') Phones
+            option(value='computer') Computer
+            option(value='clother') Clother
+        button.btn.btn-success.btn-sm(type="submit") fulter
+
+    .row
+        if products == 0
+           .alert.alert-danger there is  no product
+        else
             each product in products
                 .col.col-12.col-md-6.col-lg-4.col-xl-3
                     .card
-                        img.card-img-top(src='/' + product.image alt='Card image cap')
-                        .card-body
-                            h4.card-title
-                                a(href="/product/#product._id")= product.name
-                            p.card-text= product.price
-                            form(action="" method="method")
-                                input.form-control.form-control-sm(type="number" )
-                                input.btn.btn-cyan.btn-sm(tupe="submit" , value="add to cart")
+                    img.card-img-top(src='/' + product.image alt='Card image cap')
+                    .card-body
+                        h4.card-title
+                            a(href="/product/" + product._id )= product.name
+                        p.card-text= product.price
+                        form(action="/cart" method="POST")
+                            input.form-control.form-control-sm(type="number",  name="amount")
+                        input.btn.btn-cyan.btn-sm(tupe="submit" , value="add to cart")
