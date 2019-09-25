@@ -3,12 +3,17 @@ const path = require('path')
 const app = express();
 
 
+const homeRouter = require('./routes/home.routes')
 
-app.use(express.static(path.join('assets')))
+app.use(express.static(path.join(__dirname, 'assets')))
+app.use(express.static(path.join(__dirname, 'images')))
 
 app.set('view engine', 'pug')
 
-app.get('/', (req, res, next) => {
-    res.render('index')
-})
-app.listen(3000, err => !err ? console.log('server rening in port 3000') : console.log(err))
+
+app.use('/', homeRouter)
+
+app.listen(3000, err =>  {
+if (err) console.log(err)
+   console.log('server rening in port 3000')
+});
