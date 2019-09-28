@@ -18,3 +18,6 @@ nav.navbar.navbar-expand-md.navbar-dark.cyan
                 a.nav-link(href='/admin/add') add product
             li.nav-item
                 a.nav-link(href='/admin/orders')  managa orders
+            li.nav-item
+                form(action="/logout", method="POST")
+                    input.btn.btn-sm.btn-danger(type="submit", value="Logout")

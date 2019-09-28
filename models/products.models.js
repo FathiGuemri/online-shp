@@ -18,7 +18,10 @@ exports.getAllProducts = () => {
         }).then((products) => {
             mongoose.disconnect()
             resolev(products)
-        }).catch(err => reject(err))
+        }).catch(err => {
+            mongoose.disconnect()
+            reject(err)
+        })
     })
 
 }
@@ -30,7 +33,10 @@ exports.getAllProductsByCatecory = (category) => {
         }).then((products) => {
             mongoose.disconnect()
             resolev(products)
-        }).catch(err => reject(err))
+        }).catch(err =>{
+            mongoose.disconnect()
+            reject(err)
+        })
     })
 
 }
@@ -53,6 +59,9 @@ exports.getFristProducts = () => {
         }).then((product) => {
             mongoose.disconnect()
             resolev(product)
-        }).catch(err => reject(err))
+        }).catch(err => {
+            mongoose.disconnect()
+            reject(err)
+        })
     })
 }

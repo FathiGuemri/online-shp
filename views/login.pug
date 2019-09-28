@@ -1,0 +1,14 @@
+extends ./layout/layout
+block contant
+    .container.mt-5
+        form.text-center.border.border-light.p-5.w-50.mx-auto(action='/login', method="POST")
+            p.h4.mb-4 Sign in
+            input#defaultLoginFormEmail.form-control.mb-4(type='email', placeholder='E-mail' name="email")
+            input#defaultLoginFormPassword.form-control.mb-4(type='password', name="password" placeholder='Password')
+            button.btn.btn-info.btn-block.my-4(type='submit') Sign in
+        if authErr
+            p.alert.alert-danger.text-center.mt-3= authErr
+            p
+                | Not a member?
+                a(href='/singup') Register
+            

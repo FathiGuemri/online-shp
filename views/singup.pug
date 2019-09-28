@@ -1,0 +1,27 @@
+extends ./layout/layout
+block contant
+    .container.mt-5
+        form.text-center.border.border-light.p-5.mx-auto.w-50(action='/singup' method="POST")
+            p.h4.mb-4 Sign up
+            input#defaultRegisterFormFirstName.form-control.mb-4(type='text' name="username", placeholder='User name')
+            // email
+            input#defaultRegisterFormEmail.form-control.mb-4(type='email', placeholder='E-mail' name="email")
+            // Password
+            input#defaultRegisterFormPassword.form-control(type='password', name="password" placeholder='Password', aria-describedby='defaultRegisterFormPasswordHelpBlock')
+            small#defaultRegisterFormPasswordHelpBlock.form-text.text-muted.mb-4
+                | At least 8 characters and 1 digit
+            // Phone number
+            input#defaultRegisterPhonePassword.form-control(type='password', placeholder="conferm Password" aria-describedby='defaultRegisterFormPhoneHelpBlock')
+            small#defaultRegisterFormPhoneHelpBlock.form-text.text-muted.mb-4
+                | conferm Password
+            
+            button.btn.btn-info.my-4.btn-block(type='submit') Sign in
+
+            hr
+            
+            p
+                | By clicking
+                em Sign up
+                |  you agree to our 
+                a(href='/login' ) login
+            // Default form register
