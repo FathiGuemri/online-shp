@@ -4,7 +4,13 @@ block contant
         form.text-center.border.border-light.p-5.w-50.mx-auto(action='/login', method="POST")
             p.h4.mb-4 Sign in
             input#defaultLoginFormEmail.form-control.mb-4(type='email', placeholder='E-mail' name="email")
+            -var emailErr = ivalidetinErr.find(err => err.param === 'email')
+            if emailErr
+                p.text-left.text-danger= emailErr.msg
             input#defaultLoginFormPassword.form-control.mb-4(type='password', name="password" placeholder='Password')
+            -var passwordErr = ivalidetinErr.find(err => err.param === 'password')
+            if passwordErr
+                p.text-left.text-danger= passwordErr.msg
             button.btn.btn-info.btn-block.my-4(type='submit') Sign in
         if authErr
             p.alert.alert-danger.text-center.mt-3= authErr

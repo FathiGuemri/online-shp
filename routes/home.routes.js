@@ -1,7 +1,9 @@
 const router = require('express').Router()
 
-const HomeGonrollers = require('../controllers/home.controllers')
+const authGaurd = require('./gaurds/auth.gaurd')
 
-router.get('/', HomeGonrollers.getHome)
+const Homeconrollers = require('../controllers/home.controllers')
+
+router.get('/', Homeconrollers.getHome)
 
 module.exports = router 

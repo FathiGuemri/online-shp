@@ -1,23 +1,27 @@
 nav.navbar.navbar-expand-md.navbar-dark.cyan
-    a.navbar-brand(href='#') Online Shop
-    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#basicExampleNav', aria-controls='basicExampleNav', aria-expanded='false', aria-label='Toggle navigation')
-        span.navbar-toggler-icon
-    #basicExampleNav.collapse.navbar-collapse
-        ul.navbar-nav.ml-auto
-            li.nav-item.active
-                a.nav-link(href='/') Home
-            li.nav-item
-                a.nav-link(href='/cart') Cart
-            li.nav-item
-                a.nav-link(href='/orders') Orders
-            li.nav-item
-                a.nav-link(href='/login') Login
-            li.nav-item
-                a.nav-link(href='/singup') Singip
-            li.nav-item
-                a.nav-link(href='/admin/add') add product
-            li.nav-item
-                a.nav-link(href='/admin/orders')  managa orders
-            li.nav-item
-                form(action="/logout", method="POST")
-                    input.btn.btn-sm.btn-danger(type="submit", value="Logout")
+    .container
+        a.navbar-brand(href='/') Online Shop
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#basicExampleNav', aria-controls='basicExampleNav', aria-expanded='false', aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+        #basicExampleNav.collapse.navbar-collapse
+            ul.navbar-nav.ml-auto
+                li.nav-item.active
+                    a.nav-link(href='/') Home
+                if isUser
+                    li.nav-item
+                        a.nav-link(href='/cart') Cart
+                    li.nav-item
+                        a.nav-link(href='/orders') Orders
+                else
+                    li.nav-item
+                        a.nav-link(href='/login') Login
+                    li.nav-item
+                        a.nav-link(href='/singup') Singup
+                li.nav-item
+                    a.nav-link(href='/admin/add') add product
+                li.nav-item.mr-5
+                    a.nav-link(href='/admin/orders')  managa orders
+                if isUser
+                    li.nav-item
+                        form(action="/logout", method="POST")
+                            input.btn.btn-sm.btn-danger(type="submit", value="Logout")

@@ -10,7 +10,10 @@ exports.getHome = (req, res, next) => {
     else productsPromise =  productsModel.getAllProducts()
     
     productsPromise.then(products => {
-        res.render('index', {products})
+        res.render('index', {products, 
+            isUser: req.session.userId,
+            validnErr: req.flash('validationErr')[0]
+        })
     })
 };
 
