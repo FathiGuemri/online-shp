@@ -2,7 +2,15 @@ const cartModel = require('../models/cart.model')
 const validationRusult = require('express-validator').validationResult
 exports.getCart = (req, res, next) => {
     cartModel.getItemByUser(req.session.userId).then(items => {
-        res.render('cart', {items: items    , isUser: true})
+        let totalAmoun = 0
+        let totalCarts  = 0
+        items.forEach(element => {
+            total =  element.price * element.amount
+            totalCarts = totalCarts + total
+            totalAmoun = totalAmoun + element.amount
+    });
+       
+        res.render('cart', {totalCarts, totalAmoun, items: items    , isUser: true, validationErr: req.flash('validationErr')[0]})
     }).catch(err => console.log(err))
 }
 exports.postCart = (req, res, next) => {
@@ -21,4 +29,32 @@ exports.postCart = (req, res, next) => {
         req.flash('validationErr', validationRusult(req).array())
         res.redirect(req.body.redirectTo)
     }
+}
+
+
+exports.postSave = (req, res, next) => {
+    if (validationRusult(req).isEmpty()) {
+        cartModel.editItem(
+            req.body.cartId, 
+            {amount: req.body.amount, timestamp: Date.now()}).
+            then(items => {
+                console.log(items)
+                res.redirect('/cart')
+            }).catch(err => console.log(err))
+    } else {
+        req.flash('validationErr', validationRusult(req).array())
+        res.redirect('/cart')
+    }
+}
+
+exports.postDelete = (req, res, next) => {
+    cartModel.deleteCart(req.body.cartId).then(() => {
+        res.redirect('/cart')
+    }).catch(err => console.log(err))
+}
+
+exports.postDeletAllCart = (req, res, next) => {
+    cartModel.deleteAllCart(req.session.userId).then(() => {
+        res.redirect('/cart')
+    }).catch(err => console.log(err))
 }

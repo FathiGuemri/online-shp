@@ -39,9 +39,10 @@ exports.postLogin = (req, res, next) => {
 
         authModel
             .login(req.body.email, req.body.password)
-            .then((id) => {
-               req.session.userId = id
-                res.redirect('/')
+            .then(result => {
+               req.session.userId = result.id
+               req.session.isAdmin = result.isAdmin
+                res.redirect('/') 
             }).catch(err => {
                 req.flash('authErr', err)
                 res.redirect('/login')

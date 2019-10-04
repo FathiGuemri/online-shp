@@ -11,6 +11,8 @@ const homeRouter = require('./routes/home.routes')
 const productRouter = require('./routes/product.route')
 const authRouter = require('./routes/auth.router')
 const cartRouter = require('./routes/cart.route')
+const orderRouter = require('./routes/order.router')
+const adminRouter = require('./routes/admin.router')
 
 app.use(express.static(path.join(__dirname, 'assets')))
 app.use(express.static(path.join(__dirname, 'images')))
@@ -34,6 +36,8 @@ app.use('/', homeRouter)
 app.use('/product', productRouter)
 app.use('/', authRouter)
 app.use('/cart', cartRouter)
+app.use('/orders', orderRouter)
+app.use('/admin', adminRouter)
 
 app.listen(3000, err =>  {
 if (err) console.log(err)

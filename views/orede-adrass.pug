@@ -1,0 +1,12 @@
+extends ./layout/layout
+block contant
+    .container.mt-5
+        form.text-center.w-50.mx-auto(action="/orders/address" method="POST")
+            h3 type adderss
+            input.my-3.form-control(type="adderss" name='address',)
+            input(type="hidden" name="productName" value=cart.name)
+            input(type="hidden" name="userId" value=cart.userId)
+            input(type="hidden" name="amount" value=cart.amount)
+            input(type="hidden" name="productId" value=cart.productId)
+            input(type="hidden" name="cost" value=(cart.price * cart.amount))
+            input.btn.btn-info(type="submit" value="order")

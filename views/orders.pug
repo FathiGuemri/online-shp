@@ -1,0 +1,33 @@
+extends ./layout/layout
+block contant
+    .container.mt-5
+        if validationErr
+            p.alert.alert-danger= validationErr.msg
+        table#dtBasicExample.table.table-striped.table-bordered(cellspacing='0' width='100%')
+            thead
+                tr
+                    th.th-sm Pruduct name
+                    th.th-sm Amount
+                    th.th-sm cost
+                    th.th-sm Address
+                    th.th-sm  Status
+                    th.th-sm  Time
+            tbody
+                if orders
+                    each order, index in orders
+                        tr
+                            td= order.productName
+                            td= order.amount
+                            td= order.cost + '$'
+                            td= order.address
+                            td= order.status
+                            td= order.time
+                            td.p-0.m-0(col=4)
+                                form(method="POST").w-100.h-100.p-0.m-0
+                                    input(type="hidden" name="orderId" value=order._id)
+                                    input.btn.btn-danger.btn-sm(type="submit" value="Cancel" formaction='/orders/cancel')
+                tr  
+                    td(colspan="5")
+                    td(colspan="2")
+                        form(method="POST")
+                            input.btn.btn-danger(type="submit" formaction='/orders/cancel-all' , value="cancel ALL")

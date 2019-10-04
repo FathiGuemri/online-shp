@@ -1,15 +1,16 @@
 extends ./layout/layout
 block contant
     .container.mt-5
+        if validationErr
+            p.alert.alert-danger= validationErr.msg
         table#dtBasicExample.table.table-striped.table-bordered(cellspacing='0' width='100%')
             thead
                 tr
-                th.th-sm no
-                th.th-sm Pruduct name
-                th.th-sm Price
-                th.th-sm Amount
-                th.th-sm Total
-                th.th-sm action
+                    th.th-sm no
+                    th.th-sm Pruduct name
+                    th.th-sm Price
+                    th.th-sm(col="2") Amount
+                    th.th-sm(col="4")  Total
             tbody
                 if items
                     each item, index in items
@@ -17,13 +18,28 @@ block contant
                             td= index + 1
                             td= item.name
                             td= item.price + '$'
-                            form(method="POST")
-                                td
-                                    input.form-control.form-control-sm(type="number" value=item.amount name="amount")
-                                td= (item.price * item.amount) + '$'
-                                td
-                                    input(type="hidden" name='cartId' value="item._id")
-                                    input.btn.btn-success.btn-sm(type="submit" value="Save" formaaction='/cart/save')
-                                    input.btn.btn-danger.btn-sm(type="submit" value="Delete" formaaction='/cart/delete')
-                            
+                            td.p-0.m-0(col=4)
+                                form(method="POST").w-100.h-100.p-0.m-0
+                                    table.w-100.h-100.p-0.m-0
+                                        tr
+                                            td
+                                                input.form-control.form-control-sm(type="number" value=item.amount name="amount")
+                                                input(type="hidden" name='cartId' value=item._id)
+                                            td
+                                                input.btn.btn-success.btn-sm(type="submit" value="Save" formaction='/cart/save')
+                                                input.btn.btn-danger.btn-sm(type="submit" value="Delete" formaction='/cart/delete')
+                                                input.btn.btn-teal.btn-sm(type="submit" value="Order" formaction='/cart/order')
+                            td= (item.price * item.amount) + '$'
+                tr
+                    td(colspan=3)
+                       h3.text-center.mt-2 All
+                    td
+                        h3.float-left.text-center.mt-2.ml-5= totalAmoun
+                        form.float-right(method="POST")
+                            input.ml-auto.btn.btn-teal(type="submit" disabled value="order All" formaction='/cart/ordre-all')
+                            input.btn.btn-danger(type="submit" value="Delete All" formaction='/cart/delete-all')
+                    td
+                        h3.mt-2.text-center= totalCarts + '$'
+
                 
+            
