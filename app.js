@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'images')))
 app.use(flash())
 
 const STORE = new SessionStore({
-    uri: 'mongodb://localhost:27017/online-shop',
+    uri: 'mongodb+srv://ftahi:est*367426@cluster0-cr3v6.mongodb.net/online-shop?retryWrites=true&w=majority',
     collection: 'session'
 })
 
@@ -63,9 +63,12 @@ app.use((req, res, next) => {
         title: 'erorr'
     })
 })
-app.listen(3000, err =>  {
+
+let port = process.env.PORT || 3000
+
+app.listen(port, err =>  {
 if (err) console.log(err)
-   console.log('server rening in port 3000')
+    console.log('server rening in port 3000')
 });
 
 

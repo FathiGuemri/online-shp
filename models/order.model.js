@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const authModel = require('../models/auth.model')
 
-const DB_URL = 'mongodb://localhost:27017/online-shop' 
+const DB_URL = 'mongodb+srv://ftahi:est*367426@cluster0-cr3v6.mongodb.net/online-shop?retryWrites=true&w=majority' 
 
 const orderSchema = mongoose.Schema({
     productName: String,
@@ -24,17 +24,17 @@ exports.addToOrder = data => {
         return Order.find({productId: data.productId})
             
             .then(orders => {
-                  if (orders.length === 0) {
-                        let order = new Order(data)
-                        return  order.save()
-                  } else {
+                    if (orders.length === 0) {
+                            let order = new Order(data)
+                            return  order.save()
+                    } else {
 
-                     return Order.updateOne({productId: data.productId}, data)
-                  }
-          
-            }).catch(err => {
-               mongoose.disconnect()
-               reject(err)
+                        return Order.updateOne({productId: data.productId}, data)
+                    }
+            
+                }).catch(err => {
+                mongoose.disconnect()
+                reject(err)
             })
         }).then(() => {
             mongoose.disconnect()

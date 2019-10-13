@@ -32,6 +32,6 @@ router.post('/login',
     authController.postLogin 
 )
 
-router.all('/logout', authGuard.notAuth, authController.logout)
+router.all('/logout', authGuard.isAuth, authController.logout)
 
 module.exports = router
