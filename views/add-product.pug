@@ -1,0 +1,36 @@
+extends ./layout/layout
+block contant
+    form.text-center.border.border-light.p-5(action='/admin/add' method="POST" enctype="multipart/form-data")
+        .container
+            p.h4.mb-4 Add product
+            input#defaultContactFormName.form-control.mb-4(type='text' placeholder='Name' name="name")
+            -var nameErr = validationErrors.find(err => err.param == 'name')
+            if (nameErr)
+                p.text-danger=nameErr.msg
+            input#defaultContactFormEmail.form-control.mb-4(type='number' name="price" placeholder='Price')
+            -var priceErr = validationErrors.find(err => err.param == 'price')
+            if (priceErr)
+                p.text-danger=priceErr.msg
+            .form-group
+                textarea#exampleFormControlTextarea2.form-control.rounded-0(rows='3' name="description" placeholder='Description')
+            -var descriptionErr = validationErrors.find(err => err.param == 'description')
+            if (descriptionErr)
+                p.text-danger=descriptionErr.msg
+            label Category
+            select.browser-default.custom-select.mb-4(name="category")
+                option( disabled selected) Choose Category
+                option(value='phones') Phones
+                option(value='computer') Computer
+                option(value='clother') Clother
+            -var categoryErr = validationErrors.find(err => err.param == 'category')
+            if (categoryErr)
+                p.text-danger=categoryErr.msg
+            .input-group-prepend.mb-4
+                span#inputGroupFileAddon01.input-group-text Upload
+                .custom-file
+                    input#inputGroupFile01.custom-file-input(type='file' name="image" aria-describedby='inputGroupFileAddon01')
+                    label.custom-file-label(for='inputGroupFile01') Choose Image
+            -var imageErr = validationErrors.find(err => err.param == 'image')
+            if (imageErr)
+                p.text-danger=imageErr.msg
+            button.btn.btn-info.btn-block(type='submit') Send

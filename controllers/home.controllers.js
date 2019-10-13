@@ -1,7 +1,7 @@
 const productsModel = require('../models/products.models')
 
 exports.getHome = (req, res, next) => {
-    console.log(req.session.userId)
+    
     
     let category =  req.query.category
     let validCategory = ['clother', 'phones', 'computer']
@@ -12,7 +12,9 @@ exports.getHome = (req, res, next) => {
     productsPromise.then(products => {
         res.render('index', {products, 
             isUser: req.session.userId,
-            validnErr: req.flash('validationErr')[0]
+            isAdmin: req.session.isAdmin,
+            validnErr: req.flash('validationErr')[0],
+            title: 'home'
         })
     })
 };

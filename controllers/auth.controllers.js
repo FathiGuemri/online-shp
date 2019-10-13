@@ -4,7 +4,9 @@ exports.getSingup =  (req, res, next) => {
     res.render('singup', {
         validetinErrors: req.flash('validetinErrors'),
         isUser: req.session.userId,
-        authErr: req.flash('authErr')
+        isAdmin: false,
+        authErr: req.flash('authErr'),
+        title: 'singup'
     })
 }
 
@@ -29,8 +31,10 @@ exports.postSingup = (req, res, next) => {
 exports.getLogin = (req, res, next) => {
     res.render('login', 
     {   authErr: req.flash('authErr')[0],
+        isAdmin: false,
         ivalidetinErr: req.flash('ivalidetinErr'),
-        isUser: req.session.userId
+        isUser: req.session.userId,
+        title: 'login'
         });
 }
 
@@ -40,8 +44,10 @@ exports.postLogin = (req, res, next) => {
         authModel
             .login(req.body.email, req.body.password)
             .then(result => {
-               req.session.userId = result.id
+               req.session.userId = result.id 
                req.session.isAdmin = result.isAdmin
+               req.session.email = req.body.email
+               
                 res.redirect('/') 
             }).catch(err => {
                 req.flash('authErr', err)

@@ -15,12 +15,14 @@ block contant
             tbody
                 if orders
                     each order, index in orders
+                        -var length = orders.length
+                        input.length(type='hidden' value=length + -1)
                         tr
                             td= order.productName
                             td= order.amount
                             td= order.cost + '$'
                             td= order.address
-                            td= order.status
+                            td(data-status=order.status  class='status-' + index)= order.status
                             td= order.time
                             td.p-0.m-0(col=4)
                                 form(method="POST").w-100.h-100.p-0.m-0

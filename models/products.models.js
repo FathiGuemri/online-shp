@@ -33,7 +33,7 @@ exports.getAllProductsByCatecory = (category) => {
         }).then((products) => {
             mongoose.disconnect()
             resolev(products)
-        }).catch(err =>{
+        }).catch(err => {
             mongoose.disconnect()
             reject(err)
         })
@@ -64,4 +64,19 @@ exports.getFristProducts = () => {
             reject(err)
         })
     })
+}
+
+exports.addProduct = data => {
+    return new Promise((resolev, reject) => {
+        mongoose.connect(DB_URL).then(() => {
+            let product =  new Product(data)
+            return product.save()
+        }).then(() => {
+            mongoose.disconnect()
+            resolev()
+        }).catch(err => {
+            mongoose.disconnect()
+            reject(err)
+        }) 
+    }) 
 }

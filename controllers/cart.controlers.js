@@ -7,11 +7,11 @@ exports.getCart = (req, res, next) => {
         items.forEach(element => {
             total =  element.price * element.amount
             totalCarts = totalCarts + total
-            totalAmoun = totalAmoun + element.amount
+            totalAmoun = totalAmoun + element.amount 
     });
        
-        res.render('cart', {totalCarts, totalAmoun, items: items    , isUser: true, validationErr: req.flash('validationErr')[0]})
-    }).catch(err => console.log(err))
+    res.render('cart', {totalCarts, title: 'cart', totalAmoun, items: items, isAdmin: req.session.isAdmin, isUser: true, validationErr: req.flash('validationErr')[0]})
+    }).catch(err => next(err))
 }
 exports.postCart = (req, res, next) => {
     if (validationRusult(req).isEmpty()) {
@@ -24,7 +24,7 @@ exports.postCart = (req, res, next) => {
             timestamp: Date.now()
         }).then(() => {
             res.redirect('/cart') 
-        }).catch(err => console.log(err))
+        }).catch(err => next(err))
     } else {
         req.flash('validationErr', validationRusult(req).array())
         res.redirect(req.body.redirectTo)
@@ -38,9 +38,8 @@ exports.postSave = (req, res, next) => {
             req.body.cartId, 
             {amount: req.body.amount, timestamp: Date.now()}).
             then(items => {
-                console.log(items)
                 res.redirect('/cart')
-            }).catch(err => console.log(err))
+            }).catch(err => next(err))
     } else {
         req.flash('validationErr', validationRusult(req).array())
         res.redirect('/cart')
@@ -50,11 +49,11 @@ exports.postSave = (req, res, next) => {
 exports.postDelete = (req, res, next) => {
     cartModel.deleteCart(req.body.cartId).then(() => {
         res.redirect('/cart')
-    }).catch(err => console.log(err))
+    }).catch(err =>next(err))
 }
 
 exports.postDeletAllCart = (req, res, next) => {
     cartModel.deleteAllCart(req.session.userId).then(() => {
         res.redirect('/cart')
-    }).catch(err => console.log(err))
+    }).catch(err => next(err))
 }

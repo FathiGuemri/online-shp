@@ -22,7 +22,7 @@ block contant
                     .card-body
                         h4.card-title
                             a(href="/product/" + product._id )= product.name
-                        p.card-text= product.price
+                        p.card-text= product.price + '$'
                         form(action="/cart" method="POST")
                             input.form-control.form-control-sm(type="number",  name="amount")
                             input(type='hidden' name="name" value=product.name)

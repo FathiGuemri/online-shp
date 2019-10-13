@@ -5,8 +5,8 @@ const orderModel = require('../models/order.model')
 
 exports.postToOrderAddress = (req, res, next) => {
     cartModel.getCartById(req.body.cartId).then(cart => {
-        res.render('orede-adrass', {cart: cart, isUser: true})
-    }).catch(err => console.log(err))
+        res.render('orede-adrass', {cart: cart, isUser: true, isAdmin: true})
+    }).catch(err => next(err))
 }
 
 exports.postOrder = (req, res, next) => {
@@ -14,21 +14,22 @@ exports.postOrder = (req, res, next) => {
         productName: req.body.productName,
         productId: req.body.productId,
         userId: req.body.userId,
+        email: req.session.email,
         amount: req.body.amount,
         cost: req.body.cost,
         address: req.body.address,
-        status: false,
+        status: 'P',
         time: Date()
     }).then(() => {
        
         res.redirect('/orders')
-    }).catch(err => console.log(err))
+    }).catch(err => next(err))
 } 
 
 exports.getOrders = (req, res) => {
     orderModel.getAllOrdersByUserId(req.session.userId).then(orders => {
-        res.render('orders', {orders: orders, isUser: true})
-    }).catch(err => console.log(err))
+        res.render('orders',  {title: 'orders',orders: orders, isUser: true, isAdmin: req.session.isAdmin})
+    }).catch(err => next(err))
 }
 
 exports.postCansel = (req, res, next) => {

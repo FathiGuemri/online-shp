@@ -1,15 +1,18 @@
 const mongoose = require('mongoose')
 
+const authModel = require('../models/auth.model')
+
 const DB_URL = 'mongodb://localhost:27017/online-shop' 
 
 const orderSchema = mongoose.Schema({
     productName: String,
     productId: String,
     userId: String,
+    email: String,
     amount: Number,
     cost : Number,
     address: String,
-    status: Boolean,
+    status: String,
     time: String
 })
 
@@ -28,11 +31,10 @@ exports.addToOrder = data => {
 
                      return Order.updateOne({productId: data.productId}, data)
                   }
-
           
-                
             }).catch(err => {
-                console.log(err)
+               mongoose.disconnect()
+               reject(err)
             })
         }).then(() => {
             mongoose.disconnect()
@@ -78,7 +80,63 @@ exports.deleleOrder = orderId => {
 exports.deleleAllOrder = userId => {
     return new Promise((resolve, reject) => {
         mongoose.connect(DB_URL).then(() => {
-           return Order.deleteMany({userId: userId})
+            return Order.deleteMany({userId: userId})
+        }).then(() => {
+            mongoose.disconnect()
+            resolve()
+        }).catch(err => {
+            mongoose.disconnect()
+            reject(err)
+        })
+    })
+}
+
+exports.allOrdersByAdmin = () => {
+    return new Promise((resolve, reject) => {
+        mongoose.connect(DB_URL).then(() => {
+            return Order.find()
+        }).then(orders => {
+          mongoose.disconnect()
+          resolve(orders)
+        }).catch(err => {
+            mongoose.disconnect()
+            reject(err)
+        })
+    })
+}
+
+exports.fellterOrders = query => {
+    return new Promise((resolve, reject) => {
+        mongoose.connect(DB_URL).then(() => {
+            return Order.find({status: query})
+        }).then(orders => {
+            mongoose.disconnect()
+            resolve(orders)
+        }).catch(err => {
+            mongoose.disconnect()
+            reject(err)
+        })
+    })
+}
+
+exports.fellterOrdersByEmail = email => {
+    return new Promise((resolve, reject) => {
+        mongoose.connect(DB_URL).then(() => {
+            return Order.find({email: email})
+        }).then(orders => {
+            mongoose.disconnect()
+            resolve(orders)
+        }).catch(err => {
+            mongoose.disconnect()
+            reject(err)
+        })
+    })
+}
+
+exports.eidtOrder = (id, status) => {
+    return new Promise((resolve, reject) => {
+        mongoose.connect(DB_URL).then(() => {
+                return Order.updateOne({_id: id}, {status: status})
         }).then(() => {
             mongoose.disconnect()
             resolve()

@@ -1,0 +1,45 @@
+extends ./layout/layout
+block contant
+    .container.mt-5
+        a.btn.btn-primary(type="submit" href='/admin/orders/all') all
+        a.btn.btn-warning(type="submit" href='/admin/orders/pending') pending
+        a.btn.btn-success(type="submit" href='/admin/orders/sent') sent
+        a.btn.btn-default(type="submit" href='/admin/orders/completed') completed
+        hr
+        form(method="GET" action='/admin/orders')
+            input.form-control.d-inline-block.w-75(type="email" name="email" placeholder="User Email")
+            button.btn.btn-info(type="submit") search
+    .container.mt-5
+        table#dtBasicExample.table.table-striped.table-bordered(cellspacing='0' width='100%')
+            thead
+                tr
+                    th.th-sm Email
+                    th.th-sm Pruduct name
+                    th.th-sm Amount
+                    th.th-sm cost
+                    th.th-sm Address
+                    th.th-sm Time
+                    th.th-sm Status
+            tbody
+                if (orders)
+                    each order, index in orders
+                        -var length = orders.length
+                        input.length(type='hidden' value=length + -1)
+                        tr
+                            td=order.email
+                            td=order.productName
+                            td=order.amount
+                            td=order.cost
+                            td=order.address
+                            td=order.time
+                            td.text-center.text-white(data-status=order.status  class='status-' + index)
+                                b(selected)=order.status
+                            td.p-0.m-0(col=4)
+                                form(method="POST").w-100.h-100.p-0.m-0
+                                    select.form-control(name='status')
+                                        option P
+                                        option S
+                                        option C
+                                    input(type='hidden', value=order._id, name='_id')
+                                    input.btn.btn-success.btn-sm(type="submit" value="Save" formaction='/admin/orders/save')
+        

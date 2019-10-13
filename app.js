@@ -38,7 +38,31 @@ app.use('/', authRouter)
 app.use('/cart', cartRouter)
 app.use('/orders', orderRouter)
 app.use('/admin', adminRouter)
+app.get('/error', (req, res, next) => {
+    res.status(500)
+    res.render('error', { 
+        isUser: req.session.userId,
+        isAdmin: req.session.isAdmin, title: 'erorr' })
+})
 
+app.get('/not-admin', (req, res, next) => {
+    res.status(403)
+    res.render('not-admin', { 
+        isUser: req.session.userId,
+        isAdmin: false, title: 'erorr'})
+})
+
+app.use(( error, req, res, next) => {
+    res.redirect('/error')
+})
+
+app.use((req, res, next) => {
+    res.render('not-found', {
+        isUser: req.session.userId,
+        isAdmin: req.session.isAdmin,
+        title: 'erorr'
+    })
+})
 app.listen(3000, err =>  {
 if (err) console.log(err)
    console.log('server rening in port 3000')

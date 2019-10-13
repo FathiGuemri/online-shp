@@ -5,22 +5,24 @@ nav.navbar.navbar-expand-md.navbar-dark.cyan
             span.navbar-toggler-icon
         #basicExampleNav.collapse.navbar-collapse
             ul.navbar-nav.ml-auto
-                li.nav-item.active
+                
+                li.nav-item(class=title === 'home' ? 'active' : '' )
                     a.nav-link(href='/') Home
                 if isUser
-                    li.nav-item
+                    li.nav-item(class=title === 'cart' ? 'active' : '')
                         a.nav-link(href='/cart') Cart
-                    li.nav-item
+                    li.nav-item( class=title === 'orders' ? 'active' : '')
                         a.nav-link(href='/orders') Orders
                 else
-                    li.nav-item
+                    li.nav-item( class=title === 'login' ? 'active' : '')
                         a.nav-link(href='/login') Login
-                    li.nav-item
-                        a.nav-link(href='/singup') Singup
-                li.nav-item
-                    a.nav-link(href='/admin/add') add product
-                li.nav-item.mr-5
-                    a.nav-link(href='/admin/orders')  managa orders
+                    li.nav-item(class=title === 'sinup' ? 'active' : '')
+                        a.nav-link(href='/singup' ) Singup
+                if isAdmin
+                    li.nav-item(class=title === 'add-products' ? 'active' : '')
+                        a.nav-link(href='/admin/add') add product
+                    li.nav-item.mr-5(class=title === 'product manage' ? 'active' : '')
+                        a.nav-link(href='/admin/orders')  managa orders
                 if isUser
                     li.nav-item
                         form(action="/logout", method="POST")
